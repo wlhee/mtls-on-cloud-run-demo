@@ -14,7 +14,7 @@ done
 echo "TCP server is ready"
 
 echo "Starting Envoy ..."
-#/envoy -l debug -c /etc/envoy/server-envoy.yaml
+#/envoy -l trace -c /etc/envoy/server-envoy.yaml
 /envoy -c /etc/envoy/server-envoy.yaml
 
 
