@@ -1,5 +1,6 @@
 static_resources:
   listeners:
+  # listener_0 accepts a raw TCP stream from the local TCP client.
   - name: listener_0
     address:
       socket_address:
@@ -14,6 +15,7 @@ static_resources:
           stat_prefix: tcp_stats
           cluster: cluster_0
 
+  # listener_1 accepts a TCP stream and tunnels it over an HTTP POST stream.
   - name: listener_1
     address:
       socket_address:
@@ -32,10 +34,14 @@ static_resources:
             use_post: true
 
   clusters:
+    # cluster_0 proxies a raw TCP stream into a mTLS TCP stream to local listener_1.
     - name: cluster_0
       connect_timeout: 5s
-      http2_protocol_options:
-        {}
+      typed_extension_protocol_options:
+        envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+          "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+          explicit_http_config:
+            http2_protocol_options: {}
       load_assignment:
         cluster_name: cluster_0
         endpoints:
@@ -54,10 +60,15 @@ static_resources:
               certificate_chain: { "filename": "/etc/certs/cert.pem" }
               private_key: { "filename": "/etc/certs/key.pem" }
 
+    # cluster_1 proxies HTTP stream with a TLS HTTP/2 stream to Cloud Run.
     - name: cluster_1
       connect_timeout: 5s
       type: LOGICAL_DNS
-      http2_protocol_options: {}
+      typed_extension_protocol_options:
+        envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+          "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+          explicit_http_config:
+            http2_protocol_options: {}
       load_assignment:
         cluster_name: cluster_1
         endpoints:
