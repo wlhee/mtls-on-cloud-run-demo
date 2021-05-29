@@ -22,7 +22,7 @@ static_resources:
               - match:
                   prefix: "/"
                 route:
-                  host_rewrite_literal: helloworld-icq63pqnqq-uc.a.run.app
+                  host_rewrite_literal: CLOUD_RUN_SERVICE_HOSTNAME
                   cluster: cluster_1
           http_filters:
           - name: envoy.filters.http.router
@@ -44,7 +44,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: helloworld-icq63pqnqq-uc.a.run.app
+                      address: CLOUD_RUN_SERVICE_HOSTNAME
                       port_value: 443
                       # For local testing, use the following IP:port
                       #address: 0.0.0.0
@@ -54,4 +54,4 @@ static_resources:
         name: envoy.transport_sockets.tls
         typed_config:
           "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
-          sni: helloworld-icq63pqnqq-uc.a.run.app
+          sni: CLOUD_RUN_SERVICE_HOSTNAME
