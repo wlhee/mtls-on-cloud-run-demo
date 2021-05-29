@@ -56,7 +56,7 @@ docker build \
 -t gcr.io/$PROJECT_ID/client .
 ```
 
-Run the clinet
+Run the client
 
 ```
 docker run --network=host gcr.io/$PROJECT_ID/client
@@ -86,13 +86,13 @@ TCP client                                                TCP server
    |-> raw                                             raw ->|
        TCP ->|                                     |-> TCP
              |                                     |
-         client-sdie                           server-side
+         client-side                           server-side
            envoy                                 envoy
              |                                     |
              |-> mTLS                       mTLS ->|
                  TCP ->|                |-> TCP
                        |                |
-                  client-sdie       server-side
+                  client-side       server-side
                      envoy             envoy
                        |                |
                        |----> TLS ----->|
