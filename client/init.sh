@@ -9,8 +9,10 @@ echo "Waiting for Envoy to be ready ..."
 while [ $? -ne 0 ]
 do
   sleep 0.2
+  echo "Waiting for Envoy to be ready ..."
   /nc -zv 127.0.0.1 7777
 done
+echo "Envoy is ready"
 
-echo "Starting the client ..."
+echo "Starting TCP client ..."
 /client 127.0.0.1:7777
