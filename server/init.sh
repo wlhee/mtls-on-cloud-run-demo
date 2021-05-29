@@ -7,8 +7,8 @@ echo "Waiting for TCP server to come up ..."
 /nc -zv 127.0.0.1 7777
 while [ $? -ne 0 ]
 do
+  echo "TCP server is not ready yet ..."
   sleep 0.2
-  echo "Waiting for TCP server to come up ..."
   /nc -zv 127.0.0.1 7777
 done
 echo "TCP server is ready"

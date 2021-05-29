@@ -8,8 +8,8 @@ echo "Waiting for Envoy to be ready ..."
 /nc -zv 127.0.0.1 7777
 while [ $? -ne 0 ]
 do
+  echo "Envoy is not ready yet ..."
   sleep 0.2
-  echo "Waiting for Envoy to be ready ..."
   /nc -zv 127.0.0.1 7777
 done
 echo "Envoy is ready"
