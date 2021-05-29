@@ -50,7 +50,7 @@ cd client/
 export SERVICE_HOSTNAME=<your Cloud Run service hostname without scheme>
 
 docker build \
--build-arg CLOUD_RUN_SERVICE_HOSTNAME=${SERVICE_HOSTNAME} \
+--build-arg cloud_run_service_hostname=${SERVICE_HOSTNAME} \
 -t gcr.io/$PROJECT_ID/client .
 ```
 
