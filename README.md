@@ -12,7 +12,7 @@ Run.
 ```
 export PROJECT_ID=<your GCP project ID>
 
-# One-time config of docker
+# One-time config for docker push to Google Container Reigstry.
 gcloud auth configure-docker
 
 ```
