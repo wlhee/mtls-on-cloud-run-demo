@@ -31,7 +31,6 @@ static_resources:
             hostname: mtls-demo-icq63pqnqq-uc.a.run.app
             use_post: true
 
-
   clusters:
     - name: cluster_0
       connect_timeout: 5s
@@ -55,7 +54,6 @@ static_resources:
               certificate_chain: { "filename": "/etc/certs/cert.pem" }
               private_key: { "filename": "/etc/certs/key.pem" }
 
-
     - name: cluster_1
       connect_timeout: 5s
       type: LOGICAL_DNS
@@ -72,7 +70,7 @@ static_resources:
                       # For local testing, use the following IP:port
                       #address: 0.0.0.0
                       #port_value: 8080
-      # For local testing, remove the TLS socket.
+      # For local testing, remove the following TLS socket.
       transport_socket:
         name: envoy.transport_sockets.tls
         typed_config:
