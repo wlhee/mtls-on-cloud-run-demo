@@ -96,5 +96,11 @@ TCP client                                                TCP server
                        |                |
                        |----> TLS ----->|
                            HTTP/2 POST
-                         
 ```
+
+In the demo above, the server image contains the server-side envoy and the TCP
+server. The image is deployed to Cloud Run with HTTP/2 enabled.
+
+The cient image contains the TCP client and the client-side envoy. It runs
+locally and connects to the service running on Cloud Run with a TCP tunnel
+over HTTP/2 POST stream.
