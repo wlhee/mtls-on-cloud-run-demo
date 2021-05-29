@@ -28,7 +28,7 @@ static_resources:
           stat_prefix: tcp_stats
           cluster: cluster_1
           tunneling_config:
-            hostname: mtls-demo-icq63pqnqq-uc.a.run.app
+            hostname: CLOUD_RUN_SERVICE_HOSTNAME
             use_post: true
 
   clusters:
@@ -65,7 +65,7 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: mtls-demo-icq63pqnqq-uc.a.run.app
+                      address: CLOUD_RUN_SERVICE_HOSTNAME
                       port_value: 443
                       # For local testing, use the following IP:port
                       #address: 0.0.0.0
@@ -78,4 +78,4 @@ static_resources:
           common_tls_context:
             validation_context:
               trusted_ca: { "filename": "/etc/certs/ca-certificates.crt" }
-          sni: mtls-demo-icq63pqnqq-uc.a.run.app
+          sni: CLOUD_RUN_SERVICE_HOSTNAME

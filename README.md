@@ -21,7 +21,9 @@ Build the server
 
 ```
 cd server/
+
 docker build -t gcr.io/$PROJECT_ID/mtls-demo .
+
 docker push gcr.io/$PROJECT_ID/mtls-demo
 ```
 
@@ -39,11 +41,17 @@ Remember the URL of the newly deployed service
 
 ### 2. Build and connect the client with mTLS to the server
 
-Build the client
+Build the client with the *hostname* (excluding the `https://` scheme) of the
+Cloud Run service depployed above.
 
 ```
 cd client/
-docker build -t gcr.io/$PROJECT_ID/client .
+
+export SERVICE_HOSTNAME=<your Cloud Run service hostname without scheme>
+
+docker build \
+-build-arg CLOUD_RUN_SERVICE_HOSTNAME=${SERVICE_HOSTNAME} \
+-t gcr.io/$PROJECT_ID/client .
 ```
 
 Run the clinet
