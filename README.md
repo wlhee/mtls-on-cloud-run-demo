@@ -111,7 +111,7 @@ over HTTP/2 POST stream.
 Please note that as each TCP stream is tunneled over a HTTP/2 stream, from
 Cloud Run point of view, there is *only one* "active request", which is served
 by a single instance. If the client application multiplexes multiple
-"requests" into the TCP stream, they will be sent to the same instance
+"requests" into one TCP stream, they will be sent to the same instance
 instead of load balanced across multiple instances. The client is responsible
 for deciding the level of mutiplexing over one TCP stream.
 
