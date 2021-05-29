@@ -72,6 +72,29 @@ Starting the client ...
 ================================================================
 ```
 
+## How it works
 
+This demo leverages the advanced capability of envoy proxy to
+[tunnel TCP over HTTP POST](https://www.envoyproxy.io/docs/envoy/latest/intro/arch_overview/http/upgrades#tunneling-tcp-over-http).
 
+The following diagram illustrates the how the tunnel works:
 
+```
+TCP client                                                TCP server
+   |                                                         |
+   |-> raw                                             raw ->|
+       TCP ->|                                     |-> TCP
+             |                                     |
+         client-sdie                           server-side
+           envoy                                 envoy
+             |                                     |
+             |-> mTLS                       mTLS ->|
+                 TCP ->|                |-> TCP
+                       |                |
+                  client-sdie       server-side
+                     envoy             envoy
+                       |                |
+                       |----> TLS ----->|
+                           HTTP/2 POST
+                         
+```
