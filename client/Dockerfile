@@ -16,7 +16,6 @@ RUN sed -i "s|CLOUD_RUN_SERVICE_HOSTNAME|${cloud_run_service_hostname}|g" /etc/e
 
 COPY certs/cert.pem /etc/certs/cert.pem
 COPY certs/key.pem /etc/certs/key.pem
-COPY certs/ca-certificates.crt /etc/certs/ca-certificates.crt
 
 COPY init.sh .
 

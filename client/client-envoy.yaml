@@ -86,7 +86,4 @@ static_resources:
         name: envoy.transport_sockets.tls
         typed_config:
           "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.UpstreamTlsContext
-          common_tls_context:
-            validation_context:
-              trusted_ca: { "filename": "/etc/certs/ca-certificates.crt" }
           sni: CLOUD_RUN_SERVICE_HOSTNAME

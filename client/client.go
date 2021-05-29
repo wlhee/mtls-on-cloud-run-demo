@@ -12,13 +12,15 @@ func main() {
 		fmt.Println("host:port must be specified")
 		return
 	}
-
-	c, err := net.Dial("tcp", os.Args[1])
+	addr := os.Args[1]
+	fmt.Printf("TCP client dailing to %s ...\n", addr)
+	c, err := net.Dial("tcp", addr)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	buf := make([]byte, 1024)
+
 	for {
 		_, err := bufio.NewReader(c).Read(buf)
 		if err != nil {
