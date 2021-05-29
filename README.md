@@ -49,8 +49,7 @@ docker build -t gcr.io/$PROJECT_ID/client .
 Run the clinet
 
 ```
-docker run --network=host gcr.io/wlhe-cr/client
-
+docker run --network=host gcr.io/$PROJECT_ID/client
 ```
 
 Check the result
