@@ -33,7 +33,8 @@ Deploy to Cloud Run
 gcloud beta run deploy mtls-demo \
   --image gcr.io/$PROJECT_ID/mtls-demo \
   --allow-unauthenticated \
-  --use-http2
+  --use-http2 \
+  --project ${PROJECT_ID}
 ```
 
 Remember the URL of the newly deployed service
