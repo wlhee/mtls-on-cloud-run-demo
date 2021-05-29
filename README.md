@@ -37,7 +37,7 @@ gcloud beta run deploy mtls-demo \
   --project ${PROJECT_ID}
 ```
 
-Remember the URL of the newly deployed service
+Remember the URL of the newly deployed service, for example:
 `https://mtls-demo-<hash>-uc.a.run.app`
 
 ### 2. Build and connect the client with mTLS to the server
@@ -48,6 +48,7 @@ Cloud Run service depployed above.
 ```
 cd client/
 
+# Example: export SERVICE_HOSTNAME=mtls-demo-<hash>-uc.a.run.app
 export SERVICE_HOSTNAME=<your Cloud Run service hostname without scheme>
 
 docker build \
