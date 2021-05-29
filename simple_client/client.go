@@ -7,7 +7,8 @@ import (
 )
 
 func main() {
-	resp, err := http.Get("https://helloworld-icq63pqnqq-uc.a.run.app")
+	//resp, err := http.Get("https://helloworld-icq63pqnqq-uc.a.run.app")
+	resp, err := http.Get("http://localhost:7777")
 	if err != nil {
 		fmt.Println(err)
 		return
