@@ -1,5 +1,8 @@
 FROM envoyproxy/envoy:v1.18.2 AS envoy-base
 
+FROM debian:8 AS debian
+RUN apt-get update && apt-get -y install netcat && apt-get clean
+
 FROM golang:1.16-buster as builder
 ARG cloud_run_service_hostname
 
@@ -16,5 +19,7 @@ COPY certs/key.pem /etc/certs/key.pem
 COPY certs/ca-certificates.crt /etc/certs/ca-certificates.crt
 
 COPY init.sh .
+
+COPY --from=debian /bin/nc nc
 
 CMD ["/init.sh"]

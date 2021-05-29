@@ -3,10 +3,15 @@ package main
 import (
 	"fmt"
 	"net"
+	"os"
 )
 
 func main() {
-	addr := ":7777"
+	if len(os.Args) != 2 {
+		fmt.Println("host:port must be specified")
+		return
+	}
+	addr := os.Args[1]
 	l, err := net.Listen("tcp", addr)
 	if err != nil {
 		fmt.Println(err)

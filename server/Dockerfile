@@ -1,5 +1,8 @@
 FROM envoyproxy/envoy:v1.18.2 AS envoy-base
 
+FROM debian:8 AS debian
+RUN apt-get update && apt-get -y install netcat && apt-get clean
+
 FROM golang:1.16-buster as builder
 
 WORKDIR /
@@ -13,5 +16,7 @@ COPY certs/key.pem /etc/certs/key.pem
 EXPOSE 8080
 
 COPY init.sh .
+
+COPY --from=debian /bin/nc nc
 
 CMD ["/init.sh"]

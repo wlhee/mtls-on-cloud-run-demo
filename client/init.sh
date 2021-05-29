@@ -5,7 +5,12 @@ echo "Starting Envoy ..."
 /envoy -c /etc/envoy/client-envoy.yaml &
 
 echo "Waiting for Envoy to be ready ..."
-sleep 2
+/nc -zv 127.0.0.1 7777
+while [ $? -ne 0 ]
+do
+  sleep 0.2
+  /nc -zv 127.0.0.1 7777
+done
 
 echo "Starting the client ..."
 /client 127.0.0.1:7777
