@@ -64,7 +64,7 @@ static_resources:
     - name: cluster_1
       connect_timeout: 5s
       type: LOGICAL_DNS
-      # Use IPv4 only because Docker doens't support IPv6 excepts on Linux.
+      # Use IPv4 only because Docker doesn't support IPv6 excepts on Linux.
       dns_lookup_family: V4_ONLY
       typed_extension_protocol_options:
         envoy.extensions.upstreams.http.v3.HttpProtocolOptions:

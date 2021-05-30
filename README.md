@@ -106,14 +106,16 @@ The cient image contains the TCP client and the client-side envoy. It runs
 locally and connects to the service running on Cloud Run with a TCP tunnel
 over HTTP/2 POST stream.
 
-## Implication for load balancing
+## Implication for load balancing on Cloud Run
 
-Please note that as each TCP stream is tunneled over a HTTP/2 stream, from
-Cloud Run point of view, there is *only one* "active request", which is served
-by a single instance. If the client application multiplexes multiple
-"requests" into one TCP stream, they will be sent to the same instance
-instead of load balanced across multiple instances. The client is responsible
-for deciding the level of mutiplexing over one TCP stream.
+Cloud Run load balances each incoming HTTP/2 streams (and HTTP/1 requests)
+across the serving instances. In this demo, as each TCP stream is tunneled
+over a HTTP/2 stream, from Cloud Run point of view, there is **only one**
+"active request", which is served by a single instance. If the client
+application multiplexes multiple "requests" into one TCP stream, they will
+be sent to the same instance instead of load balanced across multiple
+instances. The client is responsible for deciding the level of mutiplexing
+over one TCP stream.
 
 For example, if the client is a HTTP/1 client, as HTTP/1 doesn't support
 multiplexing, each HTTP/1 request is tunneled over a separate TCP connection,
