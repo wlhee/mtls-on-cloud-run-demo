@@ -128,3 +128,90 @@ tunneled over a single HTTP/2 stream, which is serverd by one Cloud Run
 instance. To mitigate this issue, the HTTP/2 client can lower than the
 multiplexing level, i.e, configuring max streams per connection to a smaller
 value.
+
+## What if Cloud Run service has auth enabled?
+
+Cloud Run supports "private service", which requires authentication and
+authorization for accessing the serivce. The following shows how to make the
+client work with a auth-enabled Cloud Run service.
+
+1. Deploy the server to Cloud Run with auth enabled
+
+```
+cd server/
+
+gcloud beta run deploy mtls-demo-auth \
+  --image gcr.io/$PROJECT_ID/mtls-demo \
+  --no-allow-unauthenticated \
+  --use-http2 \
+  --project ${PROJECT_ID}
+```
+
+Remember the URL of the newly deployed service, for example:
+`https://mtls-demo-auth-<hash>-uc.a.run.app`
+
+Test the service with a simple request, 403 is expected:
+
+```
+curl -i https://mtls-demo-auth-<hash>-uc.a.run.app
+
+HTTP/2 403 
+...
+```
+
+Test the service with a request with identity token header, 404 is expected.
+If not, follow this [doc](https://cloud.google.com/run/docs/authenticating/developers)
+to set up proper auth.
+
+```
+curl -i -H "Authorization: Bearer $(gcloud auth print-identity-token)" \
+https://mtls-demo-auth-<hash>-uc.a.run.app
+
+HTTP/2 404
+...
+```
+
+2. Run a simple auth server that can provide ID token to the client
+
+```
+cd client/auth_server
+
+go run server.go
+
+Authz server is listening on port 8080
+```
+
+3. Build a new client that fetches an ID token from the auth server. The new
+client uses the envoy [ext_authz fitler](https://www.envoyproxy.io/docs/envoy/latest/configuration/http/http_filters/ext_authz_filter)
+that makes an HTTP request to the auth server for fetching the ID token
+and inject it as authorization header before sending the actual request to
+Cloud Run.
+
+```
+cd client/
+
+# Example: export SERVICE_HOSTNAME=mtls-demo-auth-<hash>-uc.a.run.app
+export SERVICE_HOSTNAME=<your Cloud Run service hostname without scheme>
+
+docker build \
+--build-arg cloud_run_service_hostname=${SERVICE_HOSTNAME} \
+-t gcr.io/$PROJECT_ID/client-auth \
+-f Dockerfile_auth .
+```
+
+4. Run the client and check the result
+
+```
+docker run --network=host gcr.io/$PROJECT_ID/client-auth
+
+Starting the client ...
+================================================================
+== Congrats!                                                  ==
+== If you see this message, it means                          ==
+== you've successfully run the mTLS demo on Google Cloud Run! ==
+================================================================
+```
+
+
+
+
